@@ -1,5 +1,17 @@
 package com.cognizant.ormlearn;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
 import com.cognizant.ormlearn.model.Country;
 import com.cognizant.ormlearn.model.Employee;
 import com.cognizant.ormlearn.model.Skill;
@@ -9,17 +21,6 @@ import com.cognizant.ormlearn.repository.StockRepository;
 import com.cognizant.ormlearn.service.DepartmentService;
 import com.cognizant.ormlearn.service.EmployeeService;
 import com.cognizant.ormlearn.service.SkillService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 @SpringBootApplication
 public class OrmLearnApplication {
 
@@ -101,7 +102,11 @@ public class OrmLearnApplication {
 
         // 2.2 Google stocks > 1250
         LOGGER.info("\n2.2 Google stocks > 1250:");
-        List<Stock> googleStocks = stockRepository.findByCodeAndCloseGreaterThan("GOOGL", 1250.00);
+        List<Stock> googleStocks =
+    stockRepository.findByCodeAndCloseGreaterThan(
+        "GOOGL",
+        BigDecimal.valueOf(1250.00)
+    );
         googleStocks.forEach(s -> LOGGER.info("{} {} {} {} {}", s.getCode(), s.getDate(), 
                                               s.getOpen(), s.getClose(), s.getVolume()));
 
